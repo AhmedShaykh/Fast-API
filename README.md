@@ -1,0 +1,1 @@
+# Full Stack FastAPI Authentication With (SQL Alchemy & Prisma ORM) & Deployed On Vercel & AWS!
