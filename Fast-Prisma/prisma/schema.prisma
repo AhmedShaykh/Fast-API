@@ -1,0 +1,40 @@
+generator client {
+  provider             = "prisma-client-py"
+  interface            = "asyncio"
+  recursive_type_depth = 5
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String    @id @default(cuid())
+  email    String    @unique
+  password String
+  fullname String
+  created  DateTime  @default(now())
+  updated  DateTime  @updatedAt
+  products Product[]
+
+  @@map("auth")
+}
+
+model Product {
+  id      String @id @default(cuid())
+  title   String
+  desc    String
+  price   Float
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@map("product")
+}
+
+model BlacklistedToken {
+  id    String @id @default(cuid())
+  token String @unique
+
+  @@map("blacklist_tokens")
+}
